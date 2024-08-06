@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('results')" :active="request()->routeIs('results')">
-                        {{ __('Results/Standings') }}
+                        {{ __('Standings') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -83,7 +83,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2">
             <x-responsive-nav-link :href="route('results')" :active="request()->routeIs('results')">
-                {{ __('Results/Standings') }}
+                {{ __('Standings') }}
             </x-responsive-nav-link>
         </div>
         <div class="">

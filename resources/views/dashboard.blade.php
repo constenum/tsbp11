@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Week by Week Results through Week '.$week) }}@if(App::environment('local'))<span class="text-red-400 font-extralight"> - Local Development</span>@endif
+            {{ __('Standings through Week '.$week) }}@if(App::environment('local'))<span class="text-red-400 font-extralight"> - Local Development</span>@endif
         </h2>
     </x-slot>
 
