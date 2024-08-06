@@ -5,6 +5,11 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
+        <!-- Register -->
+        <div class="block bg-blue-100 p-3 my-5 text-center rounded">
+            <a href="{{ route('register') }}" class="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-500 underline">Don't have an account? Register here</a>
+        </div>
+
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
