@@ -5,15 +5,30 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('results') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('results')" :active="request()->routeIs('results')">
+                        {{ __('Results/Standings') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('picks.index')" :active="request()->routeIs('picks.index')">
+                        {{ __('Picks') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('picks.current')" :active="request()->routeIs('picks.current')">
+                        {{ __('Current Week Results') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('games.index')" :active="request()->routeIs('games.index')">
+                        {{ __('Games') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -66,9 +81,24 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+        <div class="pt-2">
+            <x-responsive-nav-link :href="route('results')" :active="request()->routeIs('results')">
+                {{ __('Results/Standings') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="">
+            <x-responsive-nav-link :href="route('picks.index')" :active="request()->routeIs('picks.index')">
+                {{ __('Picks') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="">
+            <x-responsive-nav-link :href="route('picks.current')" :active="request()->routeIs('picks.current')">
+                {{ __('Current Week Results') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pb-3">
+            <x-responsive-nav-link :href="route('games.index')" :active="request()->routeIs('games.index')">
+                {{ __('Games') }}
             </x-responsive-nav-link>
         </div>
 

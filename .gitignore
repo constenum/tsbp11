@@ -142,8 +142,16 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
-
-
 #IDE Helper Generator for Laravel
 _ide_helper.php
 _ide_helper_models.php
+
+# Debugbar for Laravel
+/.idea
+/build
+/vendor
+composer.phar
+composer.lock
+.DS_Store
+.phpunit*
+/tests/Browser

@@ -6,23 +6,25 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StorePickRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize() : bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function rules() : array
+    {
+
+        return [
+            'user_id' => ['required', 'numeric'],
+            'week_id' => ['required', 'numeric'],
+            'pick_count' => ['required', 'numeric', 'max:5'],
+        ];
+    }
+
+    public function messages() : array
     {
         return [
-            //
+            'pick_count.max' => 'You may not pick more than 5 games. Please correct your picks. New picks have been deselected.',
         ];
     }
 }
