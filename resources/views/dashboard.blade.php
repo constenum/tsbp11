@@ -5,8 +5,20 @@
         </h2>
     </x-slot>
 
+    @if(!$weekly_wins_losses)
+    <div class="pb-6">
+        <div class="py-1 md:py-4 lg:py-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-2 md:p-4 lg:p-6 text-gray-900">
+                        <p class="m-3">There are no results!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
+    @else
     <div class="pb-6 mx-2">
         <div class="max-w-7xl mx-auto px-2 lg:px-4">
             <div class="mt-8 xs:mx-0.5 sm:mx-6 flex flex-col">
@@ -160,6 +172,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     @push('scripts')
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

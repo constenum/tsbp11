@@ -7,6 +7,20 @@
         </h2>
     </x-slot>
 
+    @if($games->count() == 0)
+        <div class="pb-6">
+            <div class="py-1 md:py-4 lg:py-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-2 md:p-4 lg:p-6 text-gray-900">
+                            <p class="m-3">There are no games to pick!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @else
     <div class="pb-6">
         <div class="py-1 md:py-4 lg:py-6">
             <div class="max-w-7xl mx-auto">
@@ -39,19 +53,19 @@
                             </div>
                         @endif
 
-                        <div class="flex justify-between px-2 md:px-4 py-3 font-normal">
-                            <div>
-                                Favorite is UPPERCASE
-                            </div>
-                            <div
-                                class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
-                                Picks: <span class="picks"></span>
-                                of {{ $max_picks }}
-                            </div>
-                        </div>
-
                         <form method="POST" action="{{ route('picks.store') }}">
                             @csrf
+
+                            <div class="flex justify-between px-2 md:px-4 py-3 font-normal">
+                                <div>
+                                    Favorite is UPPERCASE
+                                </div>
+                                <div
+                                    class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
+                                    Picks: <span class="picks"></span>
+                                    of {{ $max_picks }}
+                                </div>
+                            </div>
 
                             <input name="week_id" type="number" value="{{ $week }}" hidden>
                             <input name="user_id" type="number" value="{{Auth::user()->id}}" hidden>
@@ -139,6 +153,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Scripts -->
     @push('scripts')

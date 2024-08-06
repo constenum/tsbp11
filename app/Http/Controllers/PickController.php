@@ -77,6 +77,6 @@ class PickController extends Controller
         $picks = DB::table('picks')->select('user_id', 'week_id', 'picks', 'pick_count', 'wins', 'losses')->where('week_id', $week);
         $users = DB::table('users')->where('is_active', true)->leftJoinSub($picks, 'picks', function ($join){$join->on('users.id', '=', 'picks.user_id');})->orderBy('name')->get();
         $users_picks = $users->toArray();
-        return view('picks.current', compact('week', 'reveal_picks', 'max_picks', 'users_picks'));
+        return view('picks.current', compact('week', 'reveal_picks', 'max_picks', 'users_picks', 'picks'));
     }
 }

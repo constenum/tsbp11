@@ -7,6 +7,20 @@
         </h2>
     </x-slot>
 
+    @if($games->count() == 0)
+        <div class="pb-6">
+            <div class="py-1 md:py-4 lg:py-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-2 md:p-4 lg:p-6 text-gray-900">
+                            <p class="m-3">There are no games!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @else
     <div class="pb-6">
         <div class="py-1 md:py-4 lg:py-6">
             <div class="max-w-7xl mx-auto">
@@ -15,7 +29,7 @@
                         <div>
                             <ul role="list"
                                 class="grid grid-cols-1 gap-2 md:gap-4 lg:gap-6 md:grid-cols-2 lg:grid-cols-3 text-sm">
-                                @foreach($games as $game)
+                                @forelse($games as $game)
                                     <li class="col-span-1 divide-y divide-gray-200 border border-gray-300 rounded-lg bg-gray-50 shadow-md md:shadow-lg">
                                         <div class="flex w-full items-center justify-between py-4 lg:py-6">
                                             <div class="flex-1">
@@ -47,7 +61,9 @@
                                             </div>
                                         </div>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <p class="text-base">There are no games!</p>
+                                @endforelse
                             </ul>
                         </div>
                     </div>
@@ -55,4 +71,5 @@
             </div>
         </div>
     </div>
+    @endif
 </x-app-layout>
