@@ -40,7 +40,7 @@
         </div>
 
         <!-- League Code -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="code" :value="__('League Code')" />
             <x-text-input id="code" class="block mt-1 w-full" type="text" name="code" :value="old('code')" required autofocus autocomplete="code" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
