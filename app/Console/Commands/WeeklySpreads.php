@@ -31,7 +31,7 @@ class WeeklySpreads extends Command
 
         $sports = ['americanfootball_ncaaf', 'americanfootball_nfl'];
         $current_week = Week::query()->where('is_active', true)->value('id');
-        $end_date = Carbon::create(Week::where('is_active', true)->value('start_at'))->addDays(13)->toDateString();
+        $end_date = Carbon::create(Week::where('is_active', true)->value('start_at'))->addDays(6)->toDateString();
         $games_array = [];
 
         foreach ($sports as $sport) {
