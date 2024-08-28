@@ -12,7 +12,7 @@ Schedule::command('app:weekly-spreads')
 Schedule::command('spreads:weekly')
     ->environments('production')
     ->timezone('America/New_York')
-    ->weeklyOn(3, '12:00')
+    ->weeklyOn(3, '12:05')
     ->withoutOverlapping();
 
 //Schedule::command('spreads:weekly')
