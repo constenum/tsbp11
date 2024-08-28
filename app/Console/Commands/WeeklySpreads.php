@@ -18,16 +18,16 @@ class WeeklySpreads extends Command
 
     public function handle(): void
     {
-//        $weeks = Week::query()->get(['id', 'start_at', 'is_active']);
-//
-//        foreach ($weeks as $week) {
-//            if (Carbon::now()->toDateString() == Carbon::create($week->start_at)->toDateString()) {
-//                Week::query()->where('id', $week->id)->update(['is_active' => true]);
-//                break;
-//            } elseif ($week->is_active) {
-//                Week::query()->where('id', $week->id)->update(['is_active' => false]);
-//            }
-//        }
+        $weeks = Week::query()->get(['id', 'start_at', 'is_active']);
+
+        foreach ($weeks as $week) {
+            if (Carbon::now()->toDateString() == Carbon::create($week->start_at)->toDateString()) {
+                Week::query()->where('id', $week->id)->update(['is_active' => true]);
+                break;
+            } elseif ($week->is_active) {
+                Week::query()->where('id', $week->id)->update(['is_active' => false]);
+            }
+        }
 
         $sports = ['americanfootball_ncaaf', 'americanfootball_nfl'];
         $current_week = Week::query()->where('is_active', true)->value('id');
