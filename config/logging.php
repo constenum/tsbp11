@@ -65,6 +65,24 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'spreads' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/spreads.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'picks' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/picks.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
+        'payout' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/payout.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

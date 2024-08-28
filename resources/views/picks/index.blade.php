@@ -60,11 +60,6 @@
                                 <div>
                                     Favorite is UPPERCASE
                                 </div>
-                                <div
-                                    class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
-                                    Picks: <span class="picks"></span>
-                                    of {{ $max_picks }}
-                                </div>
                             </div>
 
                             <input name="week_id" type="number" value="{{ $week }}" hidden>
@@ -87,24 +82,24 @@
 
                                                 <div class="flex items-center px-4 lg:px-6">
                                                     <input id="team1" name="game{{ $game->id }}" type="radio" value="{{ $game->away_team_id }}"
-                                                           class="h-4 w-4 border-gray-300 text-indigo-600
+                                                           class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->away_team_id, $picks))
                                                            @readonly($game->start_at < \Carbon\Carbon::now() and in_array($game->away_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now())
                                                            @disabled($game->start_at < \Carbon\Carbon::now())
-                                                           ">
+                                                           />
                                                     <label for="team1"
                                                            class="ml-3 block leading-6 @if($game->away_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->away_team->yahoo_name }}
                                                         ({{ $game->away_spread }})</label>
                                                 </div>
                                                 <div class="flex items-center px-4 lg:px-6">
                                                     <input id="team2" name="game{{ $game->id }}" type="radio" value="{{ $game->home_team_id }}"
-                                                           class="h-4 w-4 border-gray-300 text-indigo-600
+                                                           class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->home_team_id, $picks))
                                                            @readonly($game->start_at < \Carbon\Carbon::now() and in_array($game->home_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now())
                                                            @disabled($game->start_at < \Carbon\Carbon::now())
-                                                           ">
+                                                           />
                                                     <label for="team2"
                                                            class="ml-3 block leading-6 @if($game->home_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->home_team->yahoo_name }}
                                                         ({{ $game->home_spread }})</label>
@@ -127,10 +122,7 @@
 
                             <input id="pick_count" name="pick_count" type="number" value="0" hidden>
 
-                            <div class="flex justify-between px-2 md:px-4 py-3 font-normal">
-                                <div>
-                                    Favorite is UPPERCASE
-                                </div>
+                            <div class="flex justify-end px-2 md:px-4 py-3 font-normal">
                                 <div
                                     class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
                                     Picks: <span class="picks"></span>

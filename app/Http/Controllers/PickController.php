@@ -41,7 +41,6 @@ class PickController extends Controller
 
     public function store(StorePickRequest $request) : RedirectResponse
     {
-        $week = Week::query()->where('is_active', true)->value('id');
         $data = $request->except('_token');
         $picks = [];
 
