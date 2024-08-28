@@ -55,7 +55,7 @@ class PickController extends Controller
             ['pick_count' => $request->pick_count, 'picks' => json_encode($picks),]
         );
 
-        PicksSuccessfullySubmitted::dispatch($submitted_picks);
+//        PicksSuccessfullySubmitted::dispatch($submitted_picks);
 
         Log::channel('picks')->info('DateTime: '.Carbon::now());
         Log::channel('picks')->info('User ID: '.$request->user_id);
