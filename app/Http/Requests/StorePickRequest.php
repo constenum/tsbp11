@@ -24,7 +24,7 @@ class StorePickRequest extends FormRequest
     public function messages() : array
     {
         return [
-            'pick_count.max' => 'You may not pick more than 5 games. Please correct your picks. New picks have been deselected.',
+            'pick_count.max' => 'You may not pick more than 5 games. Please correct your picks.',
         ];
     }
 }
