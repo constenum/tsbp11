@@ -9,23 +9,17 @@ Schedule::command('app:weekly-spreads')
     ->everyMinute()
     ->withoutOverlapping();
 
-Schedule::command('spreads:weekly')
+Schedule::command('app:weekly-spreads')
     ->environments('production')
     ->timezone('America/New_York')
     ->weeklyOn(3, '12:05')
     ->withoutOverlapping();
 
-//Schedule::command('spreads:weekly')
-//    ->environments('local')
-//    ->timezone('America/New_York')
-//    ->everyMinute()
-//    ->withoutOverlapping();
-//
-//Schedule::command('scores:daily')
-//    ->timezone('America/New_York')
-//    ->everyMinute()
-//    ->withoutOverlapping();
-//
+Schedule::command('app:daily-scores')
+    ->timezone('America/New_York')
+    ->everyMinute()
+    ->withoutOverlapping();
+
 //Schedule::command('picks-reminder:weekly')
 //    ->timezone('America/New_York')
 //    ->weeklyOn(6, '11:20')
