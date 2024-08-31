@@ -91,9 +91,6 @@
                                                     <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{"reveal: " . $reveal_picks }}
                                                     </div>
-                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
-                                                        @if(\Carbon\Carbon::now() > ($game->start_at)) Don't Hide @endif Hide @endif
-                                                    </div>
 
                                                     <div class="flex items-center px-4 lg:px-6">
                                                         <input id="team1" name="game{{ $game->id }}" type="radio"
@@ -125,7 +122,7 @@
                                                         <button type="button" id="radioReset"
                                                                 class="inline-flex items-center px-6 py-2 bg-blue-50 border border-transparent border-blue-700 rounded-md font-semibold text-xs text-blue-800 uppercase tracking-widest hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus:border-blue-800 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
                                                                 onclick="radioButtonReset({{ $game->id }})"
-                                                                @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) disabled @endif>
+                                                                @if($game->start_at < \Carbon\Carbon::now()->subHours(4) or $reveal_picks < \Carbon\Carbon::now()) disabled @endif>
                                                             {{ __('Clear Pick') }}
                                                         </button>
                                                     </div>
