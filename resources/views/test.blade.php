@@ -82,14 +82,14 @@
                                                     <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{"start_at: " . $game->start_at }}
                                                     </div>
+                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
+                                                        {{ "sys time: " . \Carbon\Carbon::now() }}
+                                                    </div>
+                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
+                                                        {{ "hide: " . \Carbon\Carbon::now()->subHours(4) }}
+                                                    </div>
                                                         <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{"reveal: " . $reveal_picks }}
-                                                    </div>
-                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
-                                                        {{ "now: " . \Carbon\Carbon::now() }}
-                                                    </div>
-                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
-                                                        {{ "now: " . \Carbon\Carbon::now()->subHours(4) }}
                                                     </div>
 
                                                     <div class="flex items-center px-4 lg:px-6">
