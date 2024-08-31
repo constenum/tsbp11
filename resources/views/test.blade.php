@@ -72,12 +72,12 @@
                                             <div class="flex w-full items-center justify-between py-4 lg:py-6">
                                                 <div class="flex-1">
                                                     <div class="grid grid-cols-2 text-gray-900 mb-2 px-4 lg:px-6">
-                                                    <span class="flex items-center">
-                                                        {{$game->start_at->format('D, M d, g:i A') }}
-                                                    </span>
+                                                        <span class="flex items-center">
+                                                            {{$game->start_at->format('D, M d, g:i A') }}
+                                                        </span>
                                                         <span class="text-right">
-                                                        {{ $game->status }}
-                                                    </span>
+                                                            {{ $game->status }}
+                                                        </span>
                                                     </div>
                                                     <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{"start_at: " . $game->start_at }}
@@ -88,12 +88,16 @@
                                                     <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{ "hide: " . \Carbon\Carbon::now()->subHours(4) }}
                                                     </div>
-                                                        <div class="text-gray-900 mb-2 px-4 lg:px-6">
+                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
+                                                        {{"reveal: " . $reveal_picks }}
+                                                    </div>
+                                                    <div class="text-gray-900 mb-2 px-4 lg:px-6">
                                                         {{"reveal: " . $reveal_picks }}
                                                     </div>
 
                                                     <div class="flex items-center px-4 lg:px-6">
-                                                        <input id="team1" name="game{{ $game->id }}" type="radio" value="{{ $game->away_team_id }}"
+                                                        <input id="team1" name="game{{ $game->id }}" type="radio"
+                                                               value="{{ $game->away_team_id }}"
                                                                class="h-4 w-4 border-gray-300 text-indigo-600"
                                                             @checked(in_array($game->away_team_id, $picks))
                                                             @readonly($game->start_at < \Carbon\Carbon::now()->subHours(4) and in_array($game->away_team_id, $picks))
@@ -105,7 +109,8 @@
                                                             ({{ $game->away_spread }})</label>
                                                     </div>
                                                     <div class="flex items-center px-4 lg:px-6">
-                                                        <input id="team2" name="game{{ $game->id }}" type="radio" value="{{ $game->home_team_id }}"
+                                                        <input id="team2" name="game{{ $game->id }}" type="radio"
+                                                               value="{{ $game->home_team_id }}"
                                                                class="h-4 w-4 border-gray-300 text-indigo-600"
                                                             @checked(in_array($game->home_team_id, $picks))
                                                             @readonly($game->start_at < \Carbon\Carbon::now()->subHours(4) and in_array($game->home_team_id, $picks))
