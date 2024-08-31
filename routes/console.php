@@ -25,7 +25,7 @@ Schedule::command('app:daily-scores')
 //    ->weeklyOn(6, '11:20')
 //    ->withoutOverlapping();
 //
-//Schedule::command('prize-money-distribution:weekly')
-//    ->timezone('America/New_York')
-//    ->weeklyOn(2, '12:00')
-//    ->withoutOverlapping();
+Schedule::command('app:weekly-prize-money-payout')
+    ->timezone('America/New_York')
+    ->weeklyOn(2, '12:00')
+    ->withoutOverlapping();

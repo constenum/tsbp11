@@ -34,6 +34,9 @@ class WeeklySpreads extends Command
         $end_date = Carbon::create(Week::where('is_active', true)->value('start_at'))->addDays(6)->toDateString();
         $games_array = [];
 
+        Log::channel('spreads')->info('======================');
+        Log::channel('spreads')->info('Current Week: '.$current_week->id);
+
         foreach ($sports as $sport) {
             $response = Http::get('https://api.the-odds-api.com/v4/sports/'.$sport.'/odds/?apiKey=e477ff82aaf4aa4f705720b0f55930df&regions=us&markets=spreads');
             $collection = collect(json_decode($response, true));
@@ -96,6 +99,12 @@ class WeeklySpreads extends Command
                 $game_array['created_at'] = Carbon::now();
                 $game_array['updated_at'] = Carbon::now();
                 $games_array[] = $game_array;
+
+                Log::channel('spreads')->info('game time: '. $start);
+                Log::channel('spreads')->info('home team: '. Team::query()->where('odds_api_name', $home_team)->value('id'));
+                Log::channel('spreads')->info('home spread: '. $home_spread);
+                Log::channel('spreads')->info('away team: '. Team::query()->where('odds_api_name', $away_team)->value('id'));
+                Log::channel('spreads')->info('away spread: '. -$home_spread);
             }
         }
         usort($games_array, function ($game1, $game2) {
@@ -105,11 +114,6 @@ class WeeklySpreads extends Command
         foreach($games_array as $game_array) {
             Log::info($game_array);
             Game::insert($game_array);
-//            $game = new Game();
-//            foreach ($game_array as $key => $value) {
-//                $game->$key = $value;
-//            }
-//            $game->save();
         }
     }
 }

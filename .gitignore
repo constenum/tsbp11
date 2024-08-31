@@ -155,3 +155,6 @@ composer.lock
 .DS_Store
 .phpunit*
 /tests/Browser
+
+# Project files to ignore
+resources/views/test.blade.php
