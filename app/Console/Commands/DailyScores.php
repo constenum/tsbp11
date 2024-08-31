@@ -10,6 +10,7 @@ use DOMDocument;
 use DOMXPath;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DailyScores extends Command
 {
@@ -56,6 +57,11 @@ class DailyScores extends Command
 
 
         for ($i = 0; $i < count($scores); $i += 7) {
+//            Log::info("status: " . $scores[$i]);
+//            Log::info("away_team: " . $scores[$i + 1] . " " . $scores[$i + 2]);
+//            Log::info("away score: " . $scores[$i+3]);
+//            Log::info("home_team: " . $scores[$i + 4] . " " . $scores[$i + 5]);
+//            Log::info("home score: " . $scores[$i+6]);
 
             if ($scores[$i] == "") {
                 $status = "Not Started";
@@ -96,7 +102,7 @@ class DailyScores extends Command
 
             $home_score = $scores[$i + 6];
 
-            $visitor = Team::where('name', $away_team)->value('id');
+            $visitor = Team::where('yahoo_name', $away_team)->value('id');
 
             $game = Game::where('away_team_id', $visitor)->where('week_id', $current_week)->get();
 
