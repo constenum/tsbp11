@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    @if($picks)
+    @if(!$picks_check)
         <div class="pb-6">
             <div class="py-1 md:py-4 lg:py-6">
                 <div class="max-w-7xl mx-auto">

@@ -6,6 +6,7 @@ use App\Events\PicksSuccessfullySubmitted;
 use App\Http\Requests\StorePickRequest;
 use App\Models\Game;
 use App\Models\Pick;
+use App\Models\User;
 use App\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
@@ -70,12 +71,12 @@ class PickController extends Controller
     public function current() : View
     {
         $week = Week::query()->where('is_active', true)->value('id');
-        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(12);
+        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(16);
         $max_picks = Week::query()->where('is_active', true)->value('max_picks');
-//        $picks = Pick::with('user')->orderBy(User::select('name')->whereColumn('users.id', 'picks.user_id'))->where('week_id', $week)->get();
+        $picks_check = Pick::with('user')->orderBy(User::select('name')->whereColumn('users.id', 'picks.user_id'))->where('week_id', $week)->get();
         $picks = DB::table('picks')->select('user_id', 'week_id', 'picks', 'pick_count', 'wins', 'losses')->where('week_id', $week);
         $users = DB::table('users')->where('is_active', true)->leftJoinSub($picks, 'picks', function ($join){$join->on('users.id', '=', 'picks.user_id');})->orderBy('name')->get();
         $users_picks = $users->toArray();
-        return view('picks.current', compact('week', 'reveal_picks', 'max_picks', 'users_picks', 'picks'));
+        return view('picks.current', compact('week', 'reveal_picks', 'max_picks', 'users_picks', 'picks_check'));
     }
 }
