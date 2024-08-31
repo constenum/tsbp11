@@ -92,7 +92,7 @@
                                                         {{"reveal: " . $reveal_picks }}
                                                     </div>
                                                     <div class="text-gray-900 mb-2 px-4 lg:px-6">
-                                                        {{"reveal: " . $reveal_picks }}
+                                                        @if(\Carbon\Carbon::now()->gt($game->start_at)) Don't Hide @endif Hide @endif
                                                     </div>
 
                                                     <div class="flex items-center px-4 lg:px-6">
