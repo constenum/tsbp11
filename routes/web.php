@@ -8,10 +8,34 @@ use App\Http\Controllers\ResultsController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeekController;
+use App\Models\Game;
+use App\Models\Pick;
+use App\Models\Week;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', function () {
-    return view('test');
+    $week = Week::query()->where('is_active', true)->value('id');
+    $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(16);
+    $max_picks = Week::query()->where('is_active', true)->value('max_picks');
+
+    $games = Game::with(['home_team', 'away_team'])->whereHas('week', function ($query) {
+        $query->where('is_active', true);
+    })->orderBy('start_at')->get();
+
+    $picks = [];
+    $json = json_decode(Pick::where('user_id', Auth::id())->where('week_id', $week)->value('picks'));
+
+    if ($json != null) {
+        foreach ($json as $value) {
+            $picks[] = $value;
+        }
+    }
+
+    return view('test', compact('week', 'reveal_picks', 'max_picks', 'games', 'picks'));
+
+//    return view('test');
 });
 
 Route::middleware('auth')->group(function () {
