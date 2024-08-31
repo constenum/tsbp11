@@ -84,9 +84,9 @@
                                                     <input id="team1" name="game{{ $game->id }}" type="radio" value="{{ $game->away_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->away_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->addHours(5) and in_array($game->away_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->addHours(6) and in_array($game->away_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now())
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->addHours(5))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->addHours(6))
                                                            />
                                                     <label for="team1"
                                                            class="ml-3 block leading-6 @if($game->away_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->away_team->yahoo_name }}
@@ -96,9 +96,9 @@
                                                     <input id="team2" name="game{{ $game->id }}" type="radio" value="{{ $game->home_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->home_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->addHours(5) and in_array($game->home_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->addHours(6) and in_array($game->home_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now())
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->addHours(5))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->addHours(6))
                                                            />
                                                     <label for="team2"
                                                            class="ml-3 block leading-6 @if($game->home_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->home_team->yahoo_name }}
