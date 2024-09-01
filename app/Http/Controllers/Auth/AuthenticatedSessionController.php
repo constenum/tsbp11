@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -28,6 +29,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        DB::table('activity')->insert([
+            'user_id' => Auth::id(),
+            'name' => Auth::user()->name,
+            'logged_in' => now(),
+        ]);
+
         return redirect()->intended(route('results', absolute: false));
     }
 
@@ -36,6 +43,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        DB::table('activity')->insert([
+            'user_id' => Auth::id(),
+            'name' => Auth::user()->name,
+            'logged_out' => now(),
+        ]);
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

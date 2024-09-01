@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('logged_in')->nullable();
+            $table->timestamp('logged_out')->nullable();
         });
     }
 
