@@ -13,7 +13,6 @@ class StorePickRequest extends FormRequest
 
     public function rules() : array
     {
-
         return [
             'user_id' => ['required', 'numeric'],
             'week_id' => ['required', 'numeric'],
