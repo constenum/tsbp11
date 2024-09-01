@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -18,7 +19,7 @@ class WeeklyReminder extends Mailable
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -27,7 +28,8 @@ class WeeklyReminder extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Weekly Reminder',
+
+            subject: 'TSPB Pick Reminder',
         );
     }
 
@@ -37,7 +39,7 @@ class WeeklyReminder extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.weekly-reminder',
         );
     }
 
