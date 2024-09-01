@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\PicksSuccessfullySubmitted;
 use App\Http\Requests\StorePickRequest;
+use App\Mail\PicksConfirmation;
 use App\Models\Game;
 use App\Models\Pick;
+use App\Models\Team;
 use App\Models\User;
 use App\Models\Week;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class PickController extends Controller
@@ -28,8 +29,9 @@ class PickController extends Controller
             $query->where('is_active', true);
         })->orderBy('start_at')->get();
 
-        $picks = [];
         $json = json_decode(Pick::where('user_id', Auth::id())->where('week_id', $week)->value('picks'));
+
+        $picks = [];
 
         if ($json != null) {
             foreach ($json as $value) {
@@ -43,6 +45,7 @@ class PickController extends Controller
     public function store(StorePickRequest $request) : RedirectResponse
     {
         $data = $request->except('_token');
+
         $picks = [];
 
         foreach ($data as $key => $value) {
@@ -51,12 +54,12 @@ class PickController extends Controller
             }
         }
 
-        $submitted_picks = Pick::updateOrCreate(
+        Pick::updateOrCreate(
             ['user_id' => $request->user_id, 'week_id' => $request->week_id],
             ['pick_count' => $request->pick_count, 'picks' => json_encode($picks),]
         );
 
-//        PicksSuccessfullySubmitted::dispatch($submitted_picks);
+        Mail::to($request->user())->send(new PicksConfirmation());
 
         Log::channel('picks')->info('DateTime: '.Carbon::now());
         Log::channel('picks')->info('User ID: '.$request->user_id);
