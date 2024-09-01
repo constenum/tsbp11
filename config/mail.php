@@ -96,8 +96,10 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'thesecondbestpool@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'TSBP'),
     ],
+
+    'reply_to' => ['address' => 'constenum@gmail.com', 'name' => 'Mark Miller'],
 
 ];
