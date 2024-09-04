@@ -16,7 +16,7 @@ class WeeklySpreads extends Command
 
     protected $description = 'Pull weekly spreads via API';
 
-    public function handle(): void
+    public function handle()
     {
         $weeks = Week::query()->get(['id', 'start_at', 'is_active']);
 
@@ -107,6 +107,7 @@ class WeeklySpreads extends Command
                 Log::channel('spreads')->info('away spread: '. -$home_spread);
             }
         }
+
         usort($games_array, function ($game1, $game2) {
             return $game1['start_at'] <=> $game2['start_at'];
         });

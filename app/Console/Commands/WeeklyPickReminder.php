@@ -14,23 +14,10 @@ use Illuminate\Support\Facades\Mail;
 
 class WeeklyPickReminder extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:weekly-pick-reminder';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Email weekly pick reminder';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $missing_picks = User::whereHas('picks', function($q){

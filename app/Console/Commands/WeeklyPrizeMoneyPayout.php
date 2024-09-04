@@ -10,23 +10,10 @@ use Illuminate\Support\Facades\Log;
 
 class WeeklyPrizeMoneyPayout extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:weekly-prize-money-payout';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Payout weekly prize money or add payout to the next week';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $current_week = Week::find(Week::query()->where('is_active', true)->value('id'));
@@ -48,10 +35,10 @@ class WeeklyPrizeMoneyPayout extends Command
                 $user->update(['winnings' => $user->winnings + round($weekly_payout / $winners->count())]);
                 Log::channel('payout')->info('Winnings: '.round($weekly_payout / $winners->count()));
             }
-            $next_week->update(['payout' => 44000]);
+            $next_week->update(['payout' => 45000]);
         } else {
             $current_week->update(['payout' => 0]);
-            $next_week->update(['payout' => 44000 + $weekly_payout]);
+            $next_week->update(['payout' => 45000 + $weekly_payout]);
         }
 
         Log::channel('payout')->info('Next Week Payout: '.$next_week->payout);
