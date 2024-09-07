@@ -35,10 +35,10 @@ class WeeklyPrizeMoneyPayout extends Command
                 $user->update(['winnings' => $user->winnings + round($weekly_payout / $winners->count())]);
                 Log::channel('payout')->info('Winnings: '.round($weekly_payout / $winners->count()));
             }
-            $next_week->update(['payout' => 45000]);
+            $next_week->update(['payout' => 44000]);
         } else {
             $current_week->update(['payout' => 0]);
-            $next_week->update(['payout' => 45000 + $weekly_payout]);
+            $next_week->update(['payout' => 44000 + $weekly_payout]);
         }
 
         Log::channel('payout')->info('Next Week Payout: '.$next_week->payout);
