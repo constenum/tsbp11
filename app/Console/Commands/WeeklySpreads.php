@@ -16,7 +16,7 @@ class WeeklySpreads extends Command
 
     protected $description = 'Pull weekly spreads via API';
 
-    public function handle()
+    public function handle() : void
     {
         $weeks = Week::query()->get(['id', 'start_at', 'is_active']);
 
@@ -31,11 +31,13 @@ class WeeklySpreads extends Command
 
         $sports = ['americanfootball_ncaaf', 'americanfootball_nfl'];
         $current_week = Week::query()->where('is_active', true)->value('id');
+        $start_date = Week::query()->where('is_active', true)->value('start_at');
         $end_date = Carbon::create(Week::where('is_active', true)->value('start_at'))->addDays(6)->toDateString();
-        $games_array = [];
 
         Log::channel('spreads')->info('======================');
-        Log::channel('spreads')->info('Current Week: '.$current_week->id);
+        Log::channel('spreads')->info('Current Week: '.$current_week);
+        Log::channel('spreads')->info('Start Date: '.Carbon::parse($start_date)->format('Y-m-d H:i:s'));
+        Log::channel('spreads')->info('End Date: '.$end_date);
 
         foreach ($sports as $sport) {
             $response = Http::get('https://api.the-odds-api.com/v4/sports/'.$sport.'/odds/?apiKey=e477ff82aaf4aa4f705720b0f55930df&regions=us&markets=spreads');
@@ -53,18 +55,18 @@ class WeeklySpreads extends Command
 
                 if ($home_team == $collection->pluck('bookmakers.0.markets.0.outcomes.0.name')[$i]) {
                     do {
-                        $home_spreads->push($collection->pluck('bookmakers.' . $odds . '.markets.0.outcomes.0.point')[$i]);
+                        $home_spreads->push($collection->pluck('bookmakers.'.$odds . '.markets.0.outcomes.0.point')[$i]);
                         $odds++;
-                        if ($collection->pluck('bookmakers.' . $odds . '.markets.0.outcomes.0.point')[$i] == null) {
+                        if ($collection->pluck('bookmakers.'.$odds . '.markets.0.outcomes.0.point')[$i] == null) {
                             $stop = false;
                         }
                     } while ($stop);
 
                 } else {
                     do {
-                        $home_spreads->push($collection->pluck('bookmakers.' . $odds . '.markets.0.outcomes.1.point')[$i]);
+                        $home_spreads->push($collection->pluck('bookmakers.'.$odds . '.markets.0.outcomes.1.point')[$i]);
                         $odds++;
-                        if ($collection->pluck('bookmakers.' . $odds . '.markets.0.outcomes.1.point')[$i] == null) {
+                        if ($collection->pluck('bookmakers.'.$odds . '.markets.0.outcomes.1.point')[$i] == null) {
                             $stop = false;
                         }
                     } while ($stop);
@@ -72,13 +74,33 @@ class WeeklySpreads extends Command
                 }
                 $home_spread = trim($home_spreads->max());
 
-                if ($home_team == null
-                    or $away_team == null
-                    or $home_spread == null
-                    or Team::query()->where('odds_api_name', $home_team)->value('id') == null
-                    or Team::query()->where('odds_api_name', $away_team)->value('id') == null
-                    or Game::query()->where('start_at', $start)->where('home_team_id', Team::query()->where('odds_api_name', $home_team)->value('id'))->first()
-                    or Carbon::create($start) >= Carbon::create($end_date)) {
+                if ($home_team == null) {
+                    Log::channel('spreads')->info('Null Home Team: '.$home_team.' ('.$home_spread.') vs. '.$away_team.' at '.$start);
+                    continue;
+                }
+
+                if ($away_team == null) {
+                    Log::channel('spreads')->info('Null Away Team: '.$home_team.' ('.$home_spread.') vs. '.$away_team.' at '.$start);
+                    continue;
+                }
+
+                if (Team::query()->where('odds_api_name', $home_team)->value('id') == null) {
+                    Log::channel('spreads')->info('Bad Home Team: '.$home_team.' ('.$home_spread.') vs. '.$away_team.' at '.$start);
+                    continue;
+                }
+
+                if (Team::query()->where('odds_api_name', $away_team)->value('id') == null) {
+                    Log::channel('spreads')->info('Bad Away Team: '.$home_team.' ('.$home_spread.') vs. '.$away_team.' at '.$start);
+                    continue;
+                }
+
+                if (Game::query()->where('start_at', $start)->where('home_team_id', Team::query()->where('odds_api_name', $home_team)->value('id'))->first()) {
+                    Log::channel('spreads')->info('Bad Game Exists: '.$home_team.' ('.$home_spread.') vs. '.$away_team.' at '.$start);
+                    continue;
+                }
+
+                if (Carbon::create($start) >= Carbon::create($end_date)) {
+                    Log::channel('spreads')->info('Bad Start Datetime: '.$home_team.'('.$home_spread.') vs. '.$away_team.' at '.$start);
                     continue;
                 }
 
@@ -99,12 +121,6 @@ class WeeklySpreads extends Command
                 $game_array['created_at'] = Carbon::now();
                 $game_array['updated_at'] = Carbon::now();
                 $games_array[] = $game_array;
-
-                Log::channel('spreads')->info('game time: '. $start);
-                Log::channel('spreads')->info('home team: '. Team::query()->where('odds_api_name', $home_team)->value('id'));
-                Log::channel('spreads')->info('home spread: '. $home_spread);
-                Log::channel('spreads')->info('away team: '. Team::query()->where('odds_api_name', $away_team)->value('id'));
-                Log::channel('spreads')->info('away spread: '. -$home_spread);
             }
         }
 
@@ -113,7 +129,13 @@ class WeeklySpreads extends Command
         });
 
         foreach($games_array as $game_array) {
-            Log::info($game_array);
+            Log::channel('spreads')->info('Game Info: '.$game_array['start_at']
+                .' '.Team::query()->where('id', $game_array['home_team_id'])->value('yahoo_name')
+                .' ('.$game_array['home_spread']
+                .') vs '.Team::query()->where('id', $game_array['away_team_id'])->value('yahoo_name')
+                .' ('.$game_array['away_spread']
+                .')'
+            );
             Game::insert($game_array);
         }
     }
