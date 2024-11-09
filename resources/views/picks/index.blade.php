@@ -84,8 +84,8 @@
                                                     <input id="team1" name="game{{ $game->id }}" type="radio" value="{{ $game->away_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->away_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(5) and in_array($game->away_team_id, $picks))
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(5) and !in_array($game->away_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(3) and in_array($game->away_team_id, $picks))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(3) and !in_array($game->away_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now() and !in_array($game->away_team_id, $picks))
                                                            />
                                                     <label for="team1"
@@ -96,8 +96,8 @@
                                                     <input id="team2" name="game{{ $game->id }}" type="radio" value="{{ $game->home_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->home_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(5) and in_array($game->home_team_id, $picks))
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(5) and !in_array($game->home_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(3) and in_array($game->home_team_id, $picks))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(3) and !in_array($game->home_team_id, $picks))
                                                            @disabled($reveal_picks < \Carbon\Carbon::now() and !in_array($game->home_team_id, $picks))
                                                            />
                                                     <label for="team2"
@@ -108,7 +108,7 @@
                                                     <button type="button" id="radioReset"
                                                             class="inline-flex items-center px-6 py-2 bg-blue-50 border border-transparent border-blue-700 rounded-md font-semibold text-xs text-blue-800 uppercase tracking-widest hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus:border-blue-800 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
                                                             onclick="radioButtonReset({{ $game->id }})"
-                                                            @if($game->start_at < \Carbon\Carbon::now()->subHours(5) or $reveal_picks < \Carbon\Carbon::now()) disabled @endif>
+                                                            @if($game->start_at < \Carbon\Carbon::now()->subHours(3) or $reveal_picks < \Carbon\Carbon::now()) disabled @endif>
                                                         {{ __('Clear Pick') }}
                                                     </button>
                                                 </div>
