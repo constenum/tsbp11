@@ -90,7 +90,7 @@
                                         @if($user_picks->picks == null or array_key_exists('0', json_decode($user_picks->picks, true)))
                                             @for($i=0; $i<$max_picks;$i++)
                                                 <td class="whitespace-nowrap py-3 pl-2 text-sm font-medium font-bold text-gray-900 border">
-                                                    @if($reveal_picks < \Carbon\Carbon::now())
+                                                    @if($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York"))
                                                         <span class="text-gray-400"> no pick</span>
                                                     @else
                                                         Not Started
@@ -125,7 +125,7 @@
                                                     @endif
                                                 @endif">
                                                     <div>
-                                                        @if(str_starts_with($game->value('status'), "Not Started") and $reveal_picks > \Carbon\Carbon::now())
+                                                        @if(str_starts_with($game->value('status'), "Not Started") and $reveal_picks > \Carbon\Carbon::now()->setTimezone("America/New_York"))
                                                             <span class="font-bold">Not Started</span>
                                                         @else
                                                             <span
@@ -142,7 +142,7 @@
                                                         @endif
                                                     </div>
                                                     <div class="text-xs text-gray-500">
-                                                        @if($game->value('status') == "Not Started" and $reveal_picks < \Carbon\Carbon::now())
+                                                        @if($game->value('status') == "Not Started" and $reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York"))
                                                             {{ \Carbon\Carbon::parse($start_datetime)->format('m/d/y g:i A') }}
                                                         @elseif($game->value('status') == "Not Started")
                                                         @else
@@ -163,7 +163,7 @@
                                                     @if($loop->count < $max_picks)
                                                         @for($i = $loop->count; $i < $max_picks; $i++)
                                                             <td class="whitespace-nowrap py-3 pl-2 text-sm font-medium font-bold text-gray-900 border">
-                                                                @if($reveal_picks < \Carbon\Carbon::now())
+                                                                @if($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York"))
                                                                     <span class="text-gray-400"> no pick</span>
                                                                 @else
                                                                     Not Started

@@ -22,7 +22,7 @@ class PickController extends Controller
     public function index() : View
     {
         $week = Week::query()->where('is_active', true)->value('id');
-        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(17);
+        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(12);
         $max_picks = Week::query()->where('is_active', true)->value('max_picks');
 
         $games = Game::with(['home_team', 'away_team'])->whereHas('week', function ($query) {
