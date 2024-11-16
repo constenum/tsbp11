@@ -22,7 +22,7 @@ class PickController extends Controller
     public function index() : View
     {
         $week = Week::query()->where('is_active', true)->value('id');
-        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(16);
+        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(17);
         $max_picks = Week::query()->where('is_active', true)->value('max_picks');
 
         $games = Game::with(['home_team', 'away_team'])->whereHas('week', function ($query) {
@@ -74,7 +74,7 @@ class PickController extends Controller
     public function current() : View
     {
         $week = Week::query()->where('is_active', true)->value('id');
-        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(16);
+        $reveal_picks = Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(17);
         $max_picks = Week::query()->where('is_active', true)->value('max_picks');
         $picks_check = Pick::with('user')->orderBy(User::select('name')->whereColumn('users.id', 'picks.user_id'))->where('week_id', $week)->get();
         $picks = DB::table('picks')->select('user_id', 'week_id', 'picks', 'pick_count', 'wins', 'losses')->where('week_id', $week);

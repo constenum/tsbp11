@@ -84,31 +84,31 @@
                                                     <input id="team1" name="game{{ $game->id }}" type="radio" value="{{ $game->away_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->away_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(5) and in_array($game->away_team_id, $picks))
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(5) and !in_array($game->away_team_id, $picks))
-                                                           @disabled($reveal_picks < \Carbon\Carbon::now() and !in_array($game->away_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") and in_array($game->away_team_id, $picks))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") and !in_array($game->away_team_id, $picks))
+                                                           @disabled($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York") and !in_array($game->away_team_id, $picks))
                                                            />
                                                     <label for="team1"
-                                                           class="ml-3 block leading-6 @if($game->away_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->away_team->yahoo_name }}
+                                                           class="ml-3 block leading-6 @if($game->away_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") or $reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York")) text-gray-400 @endif">{{ $game->away_team->yahoo_name }}
                                                         ({{ $game->away_spread }})</label>
                                                 </div>
                                                 <div class="flex items-center px-4 lg:px-6">
                                                     <input id="team2" name="game{{ $game->id }}" type="radio" value="{{ $game->home_team_id }}"
                                                            class="h-4 w-4 border-gray-300 text-indigo-600"
                                                            @checked(in_array($game->home_team_id, $picks))
-                                                           @readonly($game->start_at < \Carbon\Carbon::now()->subHours(5) and in_array($game->home_team_id, $picks))
-                                                           @disabled($game->start_at < \Carbon\Carbon::now()->subHours(5) and !in_array($game->home_team_id, $picks))
-                                                           @disabled($reveal_picks < \Carbon\Carbon::now() and !in_array($game->home_team_id, $picks))
+                                                           @readonly($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") and in_array($game->home_team_id, $picks))
+                                                           @disabled($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") and !in_array($game->home_team_id, $picks))
+                                                           @disabled($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York") and !in_array($game->home_team_id, $picks))
                                                            />
                                                     <label for="team2"
-                                                           class="ml-3 block leading-6 @if($game->home_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now() or $reveal_picks < \Carbon\Carbon::now()) text-gray-400 @endif">{{ $game->home_team->yahoo_name }}
+                                                           class="ml-3 block leading-6 @if($game->home_spread < 0) uppercase @endif text-gray-900 @if($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") or $reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York")) text-gray-400 @endif">{{ $game->home_team->yahoo_name }}
                                                         ({{ $game->home_spread }})</label>
                                                 </div>
                                                 <div class="flex justify-end mt-2 px-2 md:px-4">
                                                     <button type="button" id="radioReset"
                                                             class="inline-flex items-center px-6 py-2 bg-blue-50 border border-transparent border-blue-700 rounded-md font-semibold text-xs text-blue-800 uppercase tracking-widest hover:bg-blue-100 active:bg-blue-200 focus:outline-none focus:border-blue-800 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150"
                                                             onclick="radioButtonReset({{ $game->id }})"
-                                                            @if($game->start_at < \Carbon\Carbon::now()->subHours(5) or $reveal_picks < \Carbon\Carbon::now()) disabled @endif>
+                                                            @if($game->start_at < \Carbon\Carbon::now()->setTimezone("America/New_York") or $reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York")) disabled @endif>
                                                         {{ __('Clear Pick') }}
                                                     </button>
                                                 </div>
@@ -124,14 +124,14 @@
 
                             <div class="flex justify-end px-2 md:px-4 py-3 font-normal">
                                 <div
-                                    class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
+                                    class="font-semibold  @if($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York")) hidden @endif">
                                     Picks: <span class="picks"></span>
                                     of {{ $max_picks }}
                                 </div>
                             </div>
 
                             <div
-                                class="flex justify-end bg-white px-2 md:px-4 py-3  @if($reveal_picks < \Carbon\Carbon::now()) hidden @endif">
+                                class="flex justify-end bg-white px-2 md:px-4 py-3  @if($reveal_picks < \Carbon\Carbon::now()->setTimezone("America/New_York")) hidden @endif">
                                 <x-danger-button>
                                     {{ __('Reset') }}
                                 </x-danger-button>
