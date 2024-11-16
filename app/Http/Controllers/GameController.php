@@ -22,7 +22,7 @@ class GameController extends Controller
             $query->where('is_active', true);
         })->orderBy('start_at')->get();
 
-        return view('games.index', compact('week', 'games', 'reveal_picks', 'reveal_picks2', 'reveal_picks3', 'reveal_picks4'));
+        return view('games.index', compact('week', 'games'));
     }
 
     /**

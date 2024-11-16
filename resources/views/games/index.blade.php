@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+
     @else
     <div class="pb-6">
         <div class="py-1 md:py-4 lg:py-6">
