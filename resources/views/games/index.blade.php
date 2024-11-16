@@ -7,6 +7,21 @@
         </h2>
     </x-slot>
 
+    <div class="pb-6">
+        <div class="py-1 md:py-4 lg:py-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-2 md:p-4 lg:p-6 text-gray-900">
+                        <p class="m-3">UTC: {{ $reveal_picks }}</p>
+                        <p class="m-3">UTC: {{ $reveal_picks2 }}</p>
+                        <p class="m-3">EDT: {{ $reveal_picks }}</p>
+                        <p class="m-3">EDT: {{ $reveal_picks2 }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if($games->count() == 0)
         <div class="pb-6">
             <div class="py-1 md:py-4 lg:py-6">
@@ -19,7 +34,6 @@
                 </div>
             </div>
         </div>
-
     @else
     <div class="pb-6">
         <div class="py-1 md:py-4 lg:py-6">

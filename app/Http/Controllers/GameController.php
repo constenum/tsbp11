@@ -17,12 +17,17 @@ class GameController extends Controller
     public function index()
     {
         $week = Week::query()->where('is_active', true)->value('id');
+        $reveal_picks = \Carbon\Carbon::create(Week::query()->where('is_active', true)->value('start_at'));
+        $reveal_picks2 = \Carbon\Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->addDays(3)->addHours(17);
+
+        $reveal_picks3 = \Carbon\Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->setTimezone("America/New_York");
+        $reveal_picks4 = \Carbon\Carbon::create(Week::query()->where('is_active', true)->value('start_at'))->setTimezone("America/New_York")->addDays(3)->addHours(17);
 
         $games = Game::with(['home_team', 'away_team'])->whereHas('week', function ($query) {
             $query->where('is_active', true);
         })->orderBy('start_at')->get();
 
-        return view('games.index', compact('week', 'games'));
+        return view('games.index', compact('week', 'games', 'reveal_picks', 'reveal_picks2', 'reveal_picks3', 'reveal_picks4'));
     }
 
     /**
